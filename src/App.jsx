@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/*
+  DESAFIO TÉCNICO - JOGO DA VELHA - por fernandev
 
-function App() {
-  const [count, setCount] = useState(0)
+  * descrição
+    desenvolva um jogo da velha (tic tac toe) funcional.
+    use qualquer técnica de estilização preferida: css modules, sass, styled.
+
+  * tasks
+    ? - crie um board de 3x3
+    ? - dois jogadores
+    ? - ao clicar em um quadrado, preencher com a jogada
+    ? - avisar quando o jogo finalizar, caso dê velha avise também
+    ? - fazer um risco na sequência vencedora, caso houver
+*/
+
+
+import { useState } from 'react'
+
+import styles from './App.module.css'
+
+
+export function App() {
+  const [gameData, setGameData] = useState(
+    {
+    gameArray: ['', '', '', '', '', '', '', '', ''],
+    gameTurn: 'X',
+    })
+
+
+  const handleOnClick = (clickedIndex) => {
+    // console.log(clickedIndex)
+
+    setGameData(({gameArray, gameTurn}) => {
+      // console.log(gameTurn)
+      const newGameArray = [...gameArray]
+      newGameArray[clickedIndex] = gameData.gameTurn
+      return newGameArray
+    })
+  }
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className={styles.board}>
+        {
+          Object.keys().map((value, index) => (
+            <span
+              className={styles.gameSqr}
+              key={index}
+              onClick={() => {
+                handleOnClick(index)
+              }}
+            >
+              {value}
+            </span>
+          ))
+        }
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
-
-export default App
