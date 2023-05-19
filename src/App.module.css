@@ -1,0 +1,40 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+.board {
+    border-radius: 1rem;
+  
+    width: 25rem;
+    height: 25rem;
+    background: white;
+  
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  
+  }
+
+  
+.gameSqr {
+    color: #333;
+    font-size: 2rem;
+  
+    width: 33.33333%;
+    height: 33.33333%;
+
+    border-radius:  1rem;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.gameSqr:hover {
+    background: #f6f6f6;
+    cursor: pointer;
+}
