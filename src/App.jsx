@@ -42,10 +42,46 @@ export function App() {
       gameTurn: '✖️',
       playerWinner: ''
     })
+    
+    
 
   useEffect(() => {
+    const checkWinner = () => {
+      for(let values of winConditions) {
+        // console.log(values[0])
+  
+        if(gameData.gameArray[values[0]] === '✖️'
+        && gameData.gameArray[values[1]] === '✖️'
+        && gameData.gameArray[values[2]] === '✖️') {
+          setGameData((oldGameData) => {
+            const newGameData = {...oldGameData, playerWinner: 'Player ✖️ WINS'}
+            return newGameData
+          })
+          return
+        }
+  
+        if(gameData.gameArray[values[0]] === '⭕'
+        && gameData.gameArray[values[1]] === '⭕'
+        && gameData.gameArray[values[2]] === '⭕') {
+          setGameData((oldGameData) => {
+            const newGameData = {...oldGameData, playerWinner: 'Player ⭕ WINS'}
+            return newGameData
+          })
+          return
+        }
+      }
+
+      if(gameData.gameArray.every((item) => item !== '')) {
+        setGameData((oldGameData) => {
+          const newGameData = {...oldGameData, playerWinner: 'Draw'}
+          return newGameData
+        })
+      }
+    }
+
     checkWinner()
-  }, [gameData.gameArray, gameData.playerWinner])
+  }, [gameData])
+
 
   useEffect(() => {
     if(gameData.playerWinner !== '') {
@@ -54,33 +90,6 @@ export function App() {
   }, [gameData.playerWinner])
 
   
-  const checkWinner = () => {
-
-    for(let values of winConditions) {
-      // console.log(values[0])
-
-      if(gameData.gameArray[values[0]] === '✖️'
-      && gameData.gameArray[values[1]] === '✖️'
-      && gameData.gameArray[values[2]] === '✖️') {
-        setGameData((oldGameData) => {
-          const newGameData = {...oldGameData, playerWinner: 'Player ✖️ WINS'}
-          return newGameData
-        })
-        break
-      }
-
-      if(gameData.gameArray[values[0]] == '⭕'
-      && gameData.gameArray[values[1]] == '⭕'
-      && gameData.gameArray[values[2]] == '⭕') {
-        setGameData((oldGameData) => {
-          const newGameData = {...oldGameData, playerWinner: 'Player ⭕ WINS'}
-          return newGameData
-        })
-        break
-      }
-    }
-    console.log(gameData.playerWinner)
-  }
 
   const handleOnClick = (clickedIndex) => {
     // console.log(clickedIndex)
