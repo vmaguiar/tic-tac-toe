@@ -6,11 +6,11 @@
     use qualquer técnica de estilização preferida: css modules, sass, styled.
 
   * tasks
-    ? - crie um board de 3x3
-    ? - dois jogadores
-    ? - ao clicar em um quadrado, preencher com a jogada
-    ? - avisar quando o jogo finalizar, caso dê velha avise também
-    ? - fazer um risco na sequência vencedora, caso houver
+    ok - Draw a 3x3 board
+    ok - Add 2 players
+    ok - Draw players moves when clicked in blank square
+    (missing draw verification) - Warn game end and a winner, if draw warn as well.
+    ? - Draw a line over the winnig combo, if any
 */
 
 
@@ -46,6 +46,13 @@ export function App() {
   useEffect(() => {
     checkWinner()
   }, [gameData.gameArray, gameData.playerWinner])
+
+  useEffect(() => {
+    if(gameData.playerWinner !== '') {
+      alert(`Game Over! ${gameData.playerWinner}`)
+    }
+  }, [gameData.playerWinner])
+
   
   const checkWinner = () => {
 
@@ -59,6 +66,7 @@ export function App() {
           const newGameData = {...oldGameData, playerWinner: 'Player ✖️ WINS'}
           return newGameData
         })
+        break
       }
 
       if(gameData.gameArray[values[0]] == '⭕'
@@ -68,6 +76,7 @@ export function App() {
           const newGameData = {...oldGameData, playerWinner: 'Player ⭕ WINS'}
           return newGameData
         })
+        break
       }
     }
     console.log(gameData.playerWinner)
