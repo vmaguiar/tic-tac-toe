@@ -22,30 +22,32 @@ import styles from './App.module.css'
 export function App() {
   const [gameData, setGameData] = useState(
     {
-    gameArray: ['', '', '', '', '', '', '', '', ''],
-    gameTurn: 'X',
+      gameArray: ['15', '22', '34', '44', '55', '66', '77', '88', '999'],
+      gameTurn: 'X',
     })
 
 
   const handleOnClick = (clickedIndex) => {
     // console.log(clickedIndex)
 
-    setGameData(({gameArray, gameTurn}) => {
-      // console.log(gameTurn)
+    setGameData(({ gameArray, gameTurn }) => {
       const newGameArray = [...gameArray]
       newGameArray[clickedIndex] = gameData.gameTurn
-      return newGameArray
+      gameTurn = (gameTurn === 'X' ? 'O' : 'X')
+      
+      return { gameArray: newGameArray, gameTurn: gameTurn }
     })
   }
 
 
   return (
     <>
-      <div className={styles.board}>
+      <div className={styles.board}>  
         {
-          Object.keys().map((value, index) => (
+          
+          gameData.gameArray.map((value, index) => (
             <span
-              className={styles.gameSqr}
+             className={styles.gameSqr}
               key={index}
               onClick={() => {
                 handleOnClick(index)
