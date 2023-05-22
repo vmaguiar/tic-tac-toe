@@ -16,7 +16,8 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-  
+    
+    position: relative;
   }
 
   
@@ -27,6 +28,7 @@
     width: 33.33333%;
     height: 33.33333%;
 
+    outline: 1px solid #ccc;
     border-radius:  1rem;
   
     display: flex;
