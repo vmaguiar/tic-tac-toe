@@ -14,28 +14,77 @@
 */
 
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import styles from './App.module.css'
 
 
+const winConditions = [
+  //Rows
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+
+  //Columns
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+
+  //Diagonals
+  [0, 4, 8],
+  [2, 4, 6]
+]
+
 export function App() {
   const [gameData, setGameData] = useState(
     {
-      gameArray: ['15', '22', '34', '44', '55', '66', '77', '88', '999'],
-      gameTurn: 'X',
+      gameArray: ['', '', '', '', '', '', '', '', ''],
+      gameTurn: '✖️',
+      playerWinner: ''
     })
 
+  useEffect(() => {
+    checkWinner()
+  }, [gameData.gameArray, gameData.playerWinner])
+  
+  const checkWinner = () => {
+
+    for(let values of winConditions) {
+      // console.log(values[0])
+
+      if(gameData.gameArray[values[0]] === '✖️'
+      && gameData.gameArray[values[1]] === '✖️'
+      && gameData.gameArray[values[2]] === '✖️') {
+        setGameData((oldGameData) => {
+          const newGameData = {...oldGameData, playerWinner: 'Player ✖️ WINS'}
+          return newGameData
+        })
+      }
+
+      if(gameData.gameArray[values[0]] == '⭕'
+      && gameData.gameArray[values[1]] == '⭕'
+      && gameData.gameArray[values[2]] == '⭕') {
+        setGameData((oldGameData) => {
+          const newGameData = {...oldGameData, playerWinner: 'Player ⭕ WINS'}
+          return newGameData
+        })
+      }
+    }
+    console.log(gameData.playerWinner)
+  }
 
   const handleOnClick = (clickedIndex) => {
     // console.log(clickedIndex)
+    if(gameData.gameArray[clickedIndex] === gameData.gameTurn || gameData.gameArray[clickedIndex] !== '' || gameData.playerWinner !== ''){
+      return
+    }
 
     setGameData(({ gameArray, gameTurn }) => {
       const newGameArray = [...gameArray]
       newGameArray[clickedIndex] = gameData.gameTurn
-      gameTurn = (gameTurn === 'X' ? 'O' : 'X')
+      gameTurn = (gameTurn === '✖️' ? '⭕' : '✖️')
       
-      return { gameArray: newGameArray, gameTurn: gameTurn }
+      return { gameArray: newGameArray, gameTurn: gameTurn, playerWinner: gameData.playerWinner }
     })
   }
 
