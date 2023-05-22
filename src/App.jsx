@@ -1,9 +1,9 @@
 /*
-  DESAFIO TÉCNICO - JOGO DA VELHA - por fernandev
+  REACT CHALLENGE - TIC TAC TOE - By fernandev
 
-  * descrição
-    desenvolva um jogo da velha (tic tac toe) funcional.
-    use qualquer técnica de estilização preferida: css modules, sass, styled.
+  * Description
+    Develop a functional tic tac toe game. You can use whatever you prefer for css stylization:
+    css modules, sass, styled and etc...
 
   * tasks
     ok - Draw a 3x3 board
