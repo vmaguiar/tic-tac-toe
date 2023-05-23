@@ -42,35 +42,73 @@ export function App() {
       gameTurn: '✖️',
       playerWinner: ''
     })
-    
-    
+
+  const [winningSequence, setWinningSequence] = useState(['', '', '']) 
+  
+
+  const drawWinnerLine = (winningSequence) => {
+    switch(winningSequence) {
+      //rows cases
+      case [0, 1, 2]:
+        
+        break
+      
+      case [3, 4, 5]:
+        break
+      
+      case [6, 7, 8]:
+        break
+
+      //columns case
+      case [0, 3, 6]:
+        break
+
+      case [1, 4, 7]:
+        break
+
+      case [2, 5, 8]:
+        break
+
+      //diagonal down left to right
+      case [0, 4, 8]:
+        break
+
+      //diagonal up left to right
+      case [2, 4, 6]:
+        break
+    }
+  }
 
   useEffect(() => {
     const checkWinner = () => {
       for(let values of winConditions) {
-        // console.log(values[0])
-  
-        if(gameData.gameArray[values[0]] === '✖️'
+        if((gameData.gameArray[values[0]] === '✖️'
         && gameData.gameArray[values[1]] === '✖️'
-        && gameData.gameArray[values[2]] === '✖️') {
+        && gameData.gameArray[values[2]] === '✖️') && !gameData.playerWinner) {
           setGameData((oldGameData) => {
             const newGameData = {...oldGameData, playerWinner: 'Player ✖️ WINS'}
             return newGameData
           })
+  
+          setWinningSequence(() => values)
+
           return
         }
   
-        if(gameData.gameArray[values[0]] === '⭕'
+        if((gameData.gameArray[values[0]] === '⭕'
         && gameData.gameArray[values[1]] === '⭕'
-        && gameData.gameArray[values[2]] === '⭕') {
+        && gameData.gameArray[values[2]] === '⭕') && !gameData.playerWinner) {
           setGameData((oldGameData) => {
             const newGameData = {...oldGameData, playerWinner: 'Player ⭕ WINS'}
             return newGameData
           })
+  
+          setWinningSequence(() => values)
+  
           return
         }
       }
-
+  
       if(gameData.gameArray.every((item) => item !== '')) {
         setGameData((oldGameData) => {
           const newGameData = {...oldGameData, playerWinner: 'Draw'}
@@ -79,8 +117,9 @@ export function App() {
       }
     }
 
+
     checkWinner()
-  }, [gameData])
+  }, [gameData, winningSequence])
 
 
   useEffect(() => {
