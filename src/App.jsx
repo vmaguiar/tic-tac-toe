@@ -46,36 +46,41 @@ export function App() {
   const [winningSequence, setWinningSequence] = useState(['', '', '']) 
   
 
-  const drawWinnerLine = (winningSequence) => {
-    switch(winningSequence) {
-      //rows cases
-      case [0, 1, 2]:
-        
-        break
-      
-      case [3, 4, 5]:
-        break
-      
-      case [6, 7, 8]:
-        break
+  const drawWinnerLine = () => {
+    //Rows cases
+    if(winningSequence.every((item, index) => item === winConditions[0][index])) {
+      return styles.gameSqrWinnerRow
+    }
+    else if(winningSequence.every((item, index) => item === winConditions[1][index])) {
+      return styles.gameSqrWinnerRow
+    }
+    else if(winningSequence.every((item, index) => item === winConditions[2][index])) {
+      return styles.gameSqrWinnerRow
+    }
 
-      //columns case
-      case [0, 3, 6]:
-        break
+    //Column cases
+    if(winningSequence.every((item, index) => item === winConditions[3][index])) {
+      return styles.gameSqrWinnerColumn
+    }
+    else if(winningSequence.every((item, index) => item === winConditions[4][index])) {
+      return styles.gameSqrWinnerColumn
+    }
+    else if(winningSequence.every((item, index) => item === winConditions[5][index])) {
+      return styles.gameSqrWinnerColumn
+    }
 
-      case [1, 4, 7]:
-        break
+    //diagonal down left to right
+    if(winningSequence.every((item, index) => item === winConditions[6][index])) {
+      return styles.gameSqrWinnerD1
+    }
 
-      case [2, 5, 8]:
-        break
+    //diagonal up left to right
+    if(winningSequence.every((item, index) => item === winConditions[7][index])) {
+      return styles.gameSqrWinnerD2
+    }
 
-      //diagonal down left to right
-      case [0, 4, 8]:
-        break
-
-      //diagonal up left to right
-      case [2, 4, 6]:
-        break
+    else {
+      return ''
     }
   }
 
@@ -153,7 +158,7 @@ export function App() {
           
           gameData.gameArray.map((value, index) => (
             <span
-             className={styles.gameSqr}
+              className={winningSequence.includes(index) ? drawWinnerLine() : undefined}
               key={index}
               onClick={() => {
                 handleOnClick(index)
