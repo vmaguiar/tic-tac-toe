@@ -16,17 +16,19 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-  
+    
+    position: relative;
   }
 
   
-.gameSqr {
+span {
     color: #333;
     font-size: 2rem;
   
     width: 33.33333%;
     height: 33.33333%;
 
+    outline: 1px solid #ccc;
     border-radius:  1rem;
   
     display: flex;
@@ -34,7 +36,35 @@
     justify-content: center;
 }
   
-.gameSqr:hover {
+span:hover {
     background: #f6f6f6;
     cursor: pointer;
+}
+
+span::after {
+    content: '';
+    display: none;
+    width: 100%;
+    height: 0.625rem;
+    background: black;
+    position: absolute;
+}
+
+.gameSqrWinnerRow::after {
+    display: block;
+}
+
+.gameSqrWinnerColumn::after {
+    display: block;
+    rotate: 90deg;
+}
+
+.gameSqrWinnerD1::after {
+    display: block;
+    rotate: 45deg;
+}
+
+.gameSqrWinnerD2::after {
+    display: block;
+    rotate: 135deg;
 }
