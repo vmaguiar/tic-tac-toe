@@ -40,7 +40,8 @@ export function App() {
     {
       gameArray: ['', '', '', '', '', '', '', '', ''],
       gameTurn: '✖️',
-      playerWinner: ''
+      playerWinner: '',
+      gameEnded: false
     })
 
   const [winningSequence, setWinningSequence] = useState(['', '', '']) 
@@ -114,7 +115,7 @@ export function App() {
         }
       }
   
-      if(gameData.gameArray.every((item) => item !== '')) {
+      if(gameData.gameArray.every((item) => item !== '' && !gameData.playerWinner)) {
         setGameData((oldGameData) => {
           const newGameData = {...oldGameData, playerWinner: 'Draw'}
           return newGameData
@@ -129,11 +130,28 @@ export function App() {
 
   useEffect(() => {
     if(gameData.playerWinner !== '') {
-      alert(`Game Over! ${gameData.playerWinner}`)
+      setTimeout(() => {
+        setGameData((oldGameData) =>({...oldGameData, gameEnded: true}))
+      },1000)
     }
   }, [gameData.playerWinner])
 
   
+  useEffect(() => {
+    if(gameData.gameEnded){
+      if(confirm(`Game Over!  ${gameData.playerWinner}`)) {
+        setGameData(() => ({
+          gameArray: ['', '', '', '', '', '', '', '', ''],
+          gameTurn: '✖️',
+          playerWinner: '',
+          gameEnded: false
+        }))
+
+        setWinningSequence(() => (['', '', '']))
+      }
+    }
+  }, [gameData.gameEnded])
+
 
   const handleOnClick = (clickedIndex) => {
     // console.log(clickedIndex)
@@ -146,7 +164,7 @@ export function App() {
       newGameArray[clickedIndex] = gameData.gameTurn
       gameTurn = (gameTurn === '✖️' ? '⭕' : '✖️')
       
-      return { gameArray: newGameArray, gameTurn: gameTurn, playerWinner: gameData.playerWinner }
+      return { gameArray: newGameArray, gameTurn: gameTurn, playerWinner: gameData.playerWinner, gameEnded: gameData.gameEnded }
     })
   }
 
@@ -169,6 +187,7 @@ export function App() {
           ))
         }
       </div>
+      {/* put the alert here */}
     </>
   )
 }
